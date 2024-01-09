@@ -12,6 +12,7 @@ import axios from 'axios'
 const signinForm=async (user)=>{
     try {
         let res=await axios.post(`http://localhost:8080/signin`,user)
+        console.log(res)
         return res.data
     } catch (error) {
         return error

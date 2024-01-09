@@ -3,6 +3,10 @@ const cors = require('cors')
 const main=require('./db/config')
 const User=require('./db/user.model')
 
+//json web token
+const jwt = require('jsonwebtoken');
+const secretKey = process.env.SECRET_KEY;
+
 const app = express()
 app.use(express.json())
 app.use(cors())
@@ -31,14 +35,22 @@ app.post('/signin',async (req,res)=>{
     const{Email,Password}=req.body
     let user=await User.findOne({Email:Email,Password:Password})
     if(user){
+
+      let token=jwt.sign({
+        Email:Email,
+        Password:Password,
+        id:user._id
+      },secretKey) //create a jwt token
+
       res.send({
-        token:"Xyz",
+        token:token,
         ...user
       })
     }else{
       res.send("User not registered")
     }
   } catch (error) {
+    console.log(error)
     res.send(error)
   }
 })
