@@ -4,7 +4,17 @@ import { Box, Button, chakra, Flex, FormControl,
 import React, { useState } from "react";
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios'
 
+// api post request for create user creadantial 
+const CreateAccount=async (user)=>{
+try {
+  let res=await axios.post(`http://localhost:8080/signup`,user)
+  return res.data
+} catch (error) {
+  return error
+}
+}
 
 export const Signup = () => {
     const [showPassword, setShowPassword] = useState(false)
@@ -36,7 +46,7 @@ export const Signup = () => {
         return true;
       }
       
-      
+      // sign up form submission
     const formSubmission=()=>{
         if(!validateEmail(user.Email)){
         alert("Enter Correct Email Address")
@@ -46,7 +56,19 @@ export const Signup = () => {
         alert("Please Enter a Stronger Password")
             return
         }
-        console.log(user)
+        CreateAccount(user)
+       .then((res)=>{
+        alert(res)
+        if(res==='User Created Sucessfully.'){
+          navigate('/login')
+        }else{
+          return
+        }
+        
+       })
+       .catch((err)=>{
+        alert("Something went wrong")
+       })
     }
 
     return (

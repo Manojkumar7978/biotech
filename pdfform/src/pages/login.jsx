@@ -6,7 +6,17 @@ import {
 import React, { useState } from "react";
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios'
 
+// function for login to the form if user already exist
+const signinForm=async (user)=>{
+    try {
+        let res=await axios.post(`http://localhost:8080/signin`,user)
+        return res.data
+    } catch (error) {
+        return error
+    }
+}
 export const Login = () => {
 
     const [showPassword, setShowPassword] = useState(false)
@@ -17,8 +27,18 @@ export const Login = () => {
     const navigate = useNavigate()
     // function for sign in
     const handelSignin=()=>{
-        console.log(user)
-        navigate('/createprofile')
+        signinForm(user)
+        .then((res)=>{
+            if(res.token){
+                localStorage.setItem("token",res.token)
+                navigate('/createprofile') //navigate to the profile page after sucessful login
+                }else{
+                    alert("Wrong userid/password.")
+                }
+        })
+        .catch((err)=>{
+            alert("Something went wrong.")
+        })
     }
 
     return (
