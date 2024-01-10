@@ -75,12 +75,13 @@ export const Signup = () => {
         <Box>
             <Heading textAlign={'center'} mb={10}>Create Your Profile</Heading>
         <Box
-            rounded={'lg'}
-            bg={'white'}
-            boxShadow={'lg'}
-            p={8}
-            maxW={'500px'}
-            m={"auto"}
+           maxW="md"
+           mx="auto"
+           mt={8}
+           rounded={'lg'}
+           bg={'white'}
+           boxShadow={'lg'}
+           p={8}
         >
             <form 
             onSubmit={(e)=>{

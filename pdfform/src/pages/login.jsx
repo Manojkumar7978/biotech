@@ -46,12 +46,13 @@ export const Login = () => {
         <Box>
             <Heading textAlign={'center'} mb={10}>Login to your Profile</Heading>
             <Box
-                rounded={'lg'}
-                bg={'white'}
-                boxShadow={'lg'}
-                p={8}
-                maxW={'500px'}
-                m={"auto"}
+               maxW="md"
+               mx="auto"
+               mt={8}
+               rounded={'lg'}
+               bg={'white'}
+               boxShadow={'lg'}
+               p={8}
             >
                 <form
                onSubmit={(e)=>{
