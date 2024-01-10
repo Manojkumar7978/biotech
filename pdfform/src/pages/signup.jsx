@@ -11,7 +11,7 @@ import axios from 'axios'
 // api post request for create user creadantial 
 const CreateAccount = async (user) => {
   try {
-    let res = await axios.post(`http://localhost:8080/signup`, user)
+    let res = await axios.post(`${process.env.REACT_APP_URL}/signup`, user)
     return res.data
   } catch (error) {
     return error

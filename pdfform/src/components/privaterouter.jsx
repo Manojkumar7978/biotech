@@ -7,7 +7,7 @@ export const PrivateRouter=({children})=>{
     let [token,setToken]=useState(localStorage.getItem("token")) //our token 
     let[verified,setVer]=useState(false)// token verified or not
     
-       axios.get(`http://localhost:8080/user`,{
+       axios.get(`${process.env.REACT_APP_URL}/user`,{
             headers: {
                 'Authorization': `Bearer ${token}` // Set the Authorization header with Bearer token
               }

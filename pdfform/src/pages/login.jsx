@@ -12,7 +12,7 @@ import { useToast } from '@chakra-ui/react'
 // function for login to the form if user already exist
 const signinForm=async (user)=>{
     try {
-        let res=await axios.post(`http://localhost:8080/signin`,user)
+        let res=await axios.post(`${process.env.REACT_APP_URL}/signin`,user)
         return res.data
     } catch (error) {
         return error
@@ -33,6 +33,7 @@ export const Login = () => {
             status: status,
             duration: 3000,
             isClosable: true,
+            position:'top'
           })
     }
     const navigate = useNavigate()
@@ -45,8 +46,8 @@ export const Login = () => {
                 showToast('Success', 'Login Successfully', 'success')
                 navigate('/createprofile') //navigate to the profile page after sucessful login
                 }else{
-                    showToast('Error', 'Wrong userid/password.', 'Error')
-
+                    showToast('Error', 'Wrong userid/password.', 'error')
+                    return
                 }
         })
         .catch((err)=>{

@@ -15,6 +15,7 @@ const getUserData=async (id)=>{
       }
   };
     let res=await axios.get(`http://localhost:8080/data/${id}`,config)
+    console.log(res)
     return res.data
   } catch (error) {
     return error

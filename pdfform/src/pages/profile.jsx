@@ -28,7 +28,8 @@ const exportUserData = async (data, token) => {
         };
 
         // Send the request using axios
-        const response = await axios.post('http://localhost:8080/userData', formData, config);
+        const response = await axios.post(`${process.env.REACT_APP_URL}/userData`, formData, config);
+        console.log(response)
         return response.data;
     } catch (error) {
         return error;
