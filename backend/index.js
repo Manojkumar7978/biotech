@@ -15,9 +15,6 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-// Increase payload limit for JSON and URL-encoded data
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 //multer
 const multer = require('multer');
@@ -118,6 +115,15 @@ app.get('/data/:id',verifyToken,async (req,res)=>{
 
 
 app.use('/uploads', express.static('uploads'));
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something went wrong!');
+});
+
+app.use((req, res) => {
+  res.status(404).send('Route not found');
+});
 
 const PORT = process.env.PORT || 8080
 
