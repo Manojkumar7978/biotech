@@ -1,4 +1,4 @@
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Heading } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +9,8 @@ export const Home=()=>{
         position={'relative'}
         h={'100vh'}
         >
+                        <Heading textAlign={'center'} mb={10}>Welcome to PDF Builder</Heading>
+
             <Button size={'lg'}
             colorScheme="blue"
             position={'absolute'}

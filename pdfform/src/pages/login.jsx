@@ -7,12 +7,12 @@ import React, { useState } from "react";
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios'
+import { useToast } from '@chakra-ui/react'
 
 // function for login to the form if user already exist
 const signinForm=async (user)=>{
     try {
         let res=await axios.post(`http://localhost:8080/signin`,user)
-        console.log(res)
         return res.data
     } catch (error) {
         return error
@@ -25,6 +25,16 @@ export const Login = () => {
         Email: null,
         Password: null
     })
+    const toast=useToast()
+    const showToast=(title,desc,status)=>{
+        toast({
+            title: title,
+            description: desc,
+            status: status,
+            duration: 3000,
+            isClosable: true,
+          })
+    }
     const navigate = useNavigate()
     // function for sign in
     const handelSignin=()=>{
@@ -32,13 +42,15 @@ export const Login = () => {
         .then((res)=>{
             if(res.token){
                 localStorage.setItem("token",res.token)
+                showToast('Success', 'Login Successfully', 'success')
                 navigate('/createprofile') //navigate to the profile page after sucessful login
                 }else{
-                    alert("Wrong userid/password.")
+                    showToast('Error', 'Wrong userid/password.', 'Error')
+
                 }
         })
         .catch((err)=>{
-            alert("Something went wrong.")
+            showToast('Error', 'Something went wrong', 'error')
         })
     }
 

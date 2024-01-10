@@ -5,7 +5,8 @@ import {
     FormControl,
     FormLabel,
     FormHelperText,
-    Heading
+    Heading,
+    useToast
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useState } from "react";
@@ -30,7 +31,6 @@ const exportUserData = async (data, token) => {
         const response = await axios.post('http://localhost:8080/userData', formData, config);
         return response.data;
     } catch (error) {
-        console.log(error)
         return error;
     }
 };
@@ -44,6 +44,19 @@ export const Profile = () => {
     });
     const navigate=useNavigate()
 
+    const toast=useToast()
+    const showToast=(title,desc,status)=>{
+        toast({
+            title: title,
+            description: desc,
+            status: status,
+            duration: 3000,
+            isClosable: true,
+            position:'top'
+          })
+    }
+
+    // change the formdata on input details
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -51,7 +64,7 @@ export const Profile = () => {
             [name]: value,
         });
     };
-
+    
     const handlePhotoChange = (e) => {
         const file = e.target.files[0];
        
@@ -61,14 +74,38 @@ export const Profile = () => {
         });
     };
     
+    //fuction for form validation
+    function validateForm() {
+        const ageNumber = Number(formData.Age);
+      
+        // Check if name is not empty and contains only letters and spaces
+        const nameRegex = /^[A-Za-z\s]+$/;
+        const isNameValid = formData.Name && nameRegex.test(formData.Name);
+      
+        // Check if age is a number between 1 and 120
+        const isAgeValid = !isNaN(ageNumber) && ageNumber > 0 && ageNumber <= 120;
+      
+        // Check if address is not empty
+        const isAddressValid = formData.Address.trim() !== '';
+      
+        // Check if a photo file is selected
+        const isPhotoValid = !!formData.Photo;
+      
+        return isNameValid && isAgeValid && isAddressValid && isPhotoValid;
+      }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        exportUserData(formData,localStorage.getItem("token"))
+        if(validateForm()){
+            exportUserData(formData,localStorage.getItem("token"))
         .then((res)=>{
-            
+            showToast('Success', 'Profile created Successfully', 'success')
+ 
             navigate(`/preview/${res._id}`)
         })
+        }else{
+            showToast('', 'Input correct details.', 'info')
+        }
     };
 
     return (
@@ -112,14 +149,3 @@ export const Profile = () => {
 
 
 
- // const reader = new FileReader();
-        // reader.file=file
-        
-        // reader.onload = () => {
-        //     const photoURL = reader.result; 
-        //     console.log(photoURL); 
-    
-           
-        // };
-    
-        // reader.readAsDataURL(file);

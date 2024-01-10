@@ -1,7 +1,11 @@
-import { Box, Button, Image, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, ButtonGroup, Image, Text, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { jsPDF } from 'jspdf';
+
+
+//function to get user data
 const getUserData=async (id)=>{
   try {
     const config = {
@@ -25,6 +29,24 @@ export const Preview = () => {
   Address:"",
   Photo:""
  })
+ const navigate=useNavigate()
+
+ //function to download the user data on click button
+ const downloadPDF = () => {
+
+  const doc = new jsPDF();
+
+  doc.text(`Name: ${data.Name}`, 10, 10);
+  doc.text(`Age: ${data.Age}`, 10, 20);
+  doc.text(`Address: ${data.Address}`, 10, 30);
+
+  // Add the user's photo to the PDF
+  let src =   `http://localhost:8080/uploads/${data.Photo}`;
+  if(src)
+  doc.addImage(src, 'JPEG', 10, 40, 80, 80);
+  doc.save('pdfform.pdf')
+};
+
  useEffect(()=>{
   getUserData(id)
   .then((res)=>{
@@ -44,9 +66,18 @@ export const Preview = () => {
         <Text fontSize="md">Age: {data.Age}</Text>
         <Text fontSize="md">Address: {data.Address}</Text>
 
-        <Button colorScheme="blue" >
+        <ButtonGroup>
+        <Button colorScheme="blue" onClick={downloadPDF} >
           Download PDF
         </Button>
+          
+        <Button colorScheme="blue" onClick={()=>{
+          localStorage.removeItem("token")
+          navigate('/login')
+        }} >
+          Logout
+        </Button>
+        </ButtonGroup>
       </VStack>
     </Box>
   );

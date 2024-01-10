@@ -6,7 +6,6 @@ import { Router } from './components/router';
 function App() {
   return (
     <Box className="App" p={5}>
-     
      <Router/>
     </Box>
   );
