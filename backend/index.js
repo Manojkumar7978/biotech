@@ -8,8 +8,6 @@ const { createToken, verifyToken } = require('./jwt');
 const { error } = require('console');
 const UserData = require('./db/userdata.model');
 
-const secretKey = process.env.SECRET_KEY;
-
 const bodyParser = require('body-parser');
 const app = express()
 app.use(express.json())
@@ -125,7 +123,7 @@ app.use((req, res) => {
   res.status(404).send('Route not found');
 });
 
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT
 
 main()
 .then(()=>{
