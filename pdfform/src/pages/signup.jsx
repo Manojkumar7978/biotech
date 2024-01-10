@@ -74,10 +74,12 @@ export const Signup = () => {
     }
     CreateAccount(user)
       .then((res) => {
-        showToast('Success', 'User Created Successfully', 'success')
         if (res === 'User Created Sucessfully.') {
+          showToast('Success', 'User Created Successfully', 'success')
           navigate('/login')
         } else {
+          showToast('', 'User already register.', 'info')
+
           return
         }
 
