@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 // save user data in to the backend
 const exportUserData = async (data, token) => {
     try {
@@ -27,7 +28,6 @@ const exportUserData = async (data, token) => {
 
         // Send the request using axios
         const response = await axios.post('http://localhost:8080/userData', formData, config);
-        console.log(response.data)
         return response.data;
     } catch (error) {
         console.log(error)
@@ -42,6 +42,7 @@ export const Profile = () => {
         Address: '',
        Photo: '',
     });
+    const navigate=useNavigate()
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -64,6 +65,10 @@ export const Profile = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         exportUserData(formData,localStorage.getItem("token"))
+        .then((res)=>{
+            
+            navigate(`/preview/${res._id}`)
+        })
     };
 
     return (

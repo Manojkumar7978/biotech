@@ -5,6 +5,7 @@ import { Login } from "../pages/login";
 import { Profile } from "../pages/profile";
 import { PrivateRouter } from "./privaterouter";
 import { Home } from "../pages/home";
+import { Preview } from "../pages/preview";
 
 export const Router = () => {
     return (
@@ -18,6 +19,11 @@ export const Router = () => {
                 </PrivateRouter>
 
             } />
+            <Route path="/preview/:id" element={
+                <PrivateRouter>
+                    <Preview/>
+                </PrivateRouter>
+            }/>
         </Routes>
     )
 }

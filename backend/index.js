@@ -110,12 +110,15 @@ app.get('/data/:id',verifyToken,async (req,res)=>{
     let {id}=req.params
 
     let data=await UserData.findById(id)
-    console.log(data)
     res.send(data)
   } catch (error) {
     res.send(error)
   }
 })
+
+
+app.use('/uploads', express.static('uploads'));
+
 const PORT = process.env.PORT || 8080
 
 main()

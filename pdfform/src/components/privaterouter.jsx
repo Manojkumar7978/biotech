@@ -6,7 +6,7 @@ import { Navigate } from "react-router-dom";
 export const PrivateRouter=({children})=>{
     let [token,setToken]=useState(localStorage.getItem("token")) //our token 
     let[verified,setVer]=useState(false)// token verified or not
-    if(token){
+    
        axios.get(`http://localhost:8080/user`,{
             headers: {
                 'Authorization': `Bearer ${token}` // Set the Authorization header with Bearer token
@@ -20,7 +20,6 @@ export const PrivateRouter=({children})=>{
             setVer(true)
         })
         
-    }
     return (
         <Box>
             {
