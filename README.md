@@ -11,3 +11,13 @@
 - npm start (for frontend)
 - node index.js (for backend)
 
+## All Screenshots
+
+![SignUp](./pdfform/Screen%20shots/signup.png )
+
+![Login](./pdfform/Screen%20shots/login.png)
+
+![Form](./pdfform/Screen%20shots/form.png)
+
+![Preview](./pdfform/Screen%20shots/preview.png)
+
